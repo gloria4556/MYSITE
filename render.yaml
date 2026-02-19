@@ -51,9 +51,3 @@ services:
     envVars:
       - key: REACT_APP_API_URL
         value: "https://mysite-backend.onrender.com"
-
-databases:
-  - name: mysite-db
-    engine: postgres
-    version: "15"
-    plan: free
