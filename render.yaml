@@ -10,18 +10,15 @@ services:
       - key: DEBUG
         value: "False"
       - key: SECRET_KEY
-        fromService:
-          type: pserv
-          name: mysite-db
-          envVarKey: SECRET_KEY
+        value: "your-secret-key-change-this-in-production"
       - key: DATABASE_URL
         fromDatabase:
           name: mysite-db
           property: connectionString
       - key: ALLOWED_HOSTS
-        value: "*"
+        value: "mysite-backend.onrender.com,localhost"
       - key: CORS_ALLOWED_ORIGINS
-        value: "http://localhost:3000,http://127.0.0.1:3000,http://localhost:3001,http://127.0.0.1:3001"
+        value: "https://mysite-frontend.onrender.com,https://mysite-admin.onrender.com,http://localhost:3000,http://localhost:3001"
       - key: STRIPE_PUBLIC_KEY
         sync: false
       - key: STRIPE_SECRET_KEY
@@ -41,6 +38,8 @@ services:
     envVars:
       - key: REACT_APP_API_URL
         value: "https://mysite-backend.onrender.com"
+      - key: REACT_APP_STRIPE_PUBLISHABLE_KEY
+        sync: false
 
   - type: web
     name: mysite-admin
@@ -56,5 +55,5 @@ services:
 databases:
   - name: mysite-db
     engine: postgres
-    ipWhitelist: []
-    previewPlan: free
+    version: "15"
+    plan: free
