@@ -31,7 +31,7 @@ services:
     env: node
     region: ohio
     plan: free
-    buildCommand: cd frontend && npm ci && npm run build
+    buildCommand: cd frontend && npm install --legacy-peer-deps && npm run build
     startCommand: npm install -g serve && serve -s frontend/build -l 3000
     envVars:
       - key: REACT_APP_API_URL
@@ -44,7 +44,7 @@ services:
     env: node
     region: ohio
     plan: free
-    buildCommand: cd admin-panel && npm ci && npm run build
+    buildCommand: cd admin-panel && npm install --legacy-peer-deps && npm run build
     startCommand: npm install -g serve && serve -s admin-panel/build -l 3000
     envVars:
       - key: REACT_APP_API_URL

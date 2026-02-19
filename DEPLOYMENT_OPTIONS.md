@@ -3,12 +3,14 @@
 ## Issue Resolved ✅
 
 The deployment failed because:
+
 - ❌ `npm install` wasn't finding the build script
 - ❌ node_modules might have been corrupted or missing dependencies
 
 ## Solution Applied ✅
 
 Updated `render.yaml` to use:
+
 - ✅ `npm ci` instead of `npm install` (cleaner, more reliable for CI/CD)
 - ✅ Removed node_modules from git tracking
 - ✅ Using package-lock.json for reproducible builds
@@ -27,6 +29,7 @@ Updated `render.yaml` to use:
 4. Click "Deploy"
 
 Render will:
+
 - ✅ Read render.yaml
 - ✅ Install dependencies with `npm ci`
 - ✅ Build React apps
@@ -34,6 +37,7 @@ Render will:
 - ✅ Auto-redeploy when you push to GitHub
 
 **Advantages:**
+
 - Fully automated
 - Works with GitHub changes
 - No manual steps
@@ -49,20 +53,22 @@ Render will:
 1. Dashboard → "New +" → "Web Service"
 2. Connect your GitHub repository
 3. Fill in:
+
    ```
    Name: mysite-backend
    Environment: Python 3.11
    Region: Ohio
-   Build Command: 
+   Build Command:
      pip install -r backend/requirements.txt && \
      cd backend && \
      python manage.py migrate && \
      python manage.py collectstatic --noinput
-   
+
    Start Command:
      cd backend && \
      gunicorn backend.wsgi:application --bind 0.0.0.0:$PORT
    ```
+
 4. Click "Advanced" → Root Directory: `backend`
 5. Click "Create"
 6. Wait 5 minutes
@@ -98,6 +104,7 @@ Render will:
 1. Dashboard → "New +" → "Web Service"
 2. Connect GitHub repository
 3. Fill in:
+
    ```
    Name: mysite-frontend
    Environment: Node.js
@@ -106,11 +113,12 @@ Render will:
      cd frontend && \
      npm ci && \
      npm run build
-   
+
    Start Command:
      npm install -g serve && \
      serve -s frontend/build -l 3000
    ```
+
 4. Environment Variables:
    ```
    REACT_APP_API_URL=https://mysite-backend.onrender.com
@@ -124,6 +132,7 @@ Render will:
 1. Dashboard → "New +" → "Web Service"
 2. Connect GitHub repository
 3. Fill in:
+
    ```
    Name: mysite-admin
    Environment: Node.js
@@ -132,11 +141,12 @@ Render will:
      cd admin-panel && \
      npm ci && \
      npm run build
-   
+
    Start Command:
      npm install -g serve && \
      serve -s admin-panel/build -l 3000
    ```
+
 4. Environment Variables:
    ```
    REACT_APP_API_URL=https://mysite-backend.onrender.com
@@ -151,6 +161,7 @@ Render will:
 ### Check Services Status
 
 Dashboard should show all 3 as "Live" or "Available":
+
 - ✅ mysite-backend
 - ✅ mysite-frontend
 - ✅ mysite-admin
@@ -190,11 +201,13 @@ Should load admin login.
 Check logs: Dashboard → Service → "Logs"
 
 Common issues:
+
 - `ModuleNotFoundError` → Missing Python dependency
 - `PermissionDenied` → Database permission issue
 - `SyntaxError` → Error in Python code
 
-**Fix:** 
+**Fix:**
+
 ```bash
 cd backend && python manage.py runserver  # Test locally first
 ```
@@ -204,11 +217,13 @@ cd backend && python manage.py runserver  # Test locally first
 Check logs: Dashboard → Service → "Logs"
 
 Common issues:
+
 - `npm ERR! Missing script: "build"` → Package.json corrupted
 - `npm ERR! code ERESOLVE` → Dependency conflict
 - `out of memory` → Too many dependencies
 
 **Fix:**
+
 ```bash
 cd frontend
 rm -rf node_modules package-lock.json
@@ -256,6 +271,7 @@ cd backend && python manage.py createsuperuser
 ## Environment Variables Reference
 
 ### Backend (.env or Render)
+
 ```
 DEBUG=False                          # Never True in production
 SECRET_KEY=<40+ random chars>        # Change this!
@@ -269,6 +285,7 @@ PAYPAL_SECRET=...                    # PayPal sandbox/production
 ```
 
 ### Frontend (.env or Render)
+
 ```
 REACT_APP_API_URL=https://...                    # Backend URL
 REACT_APP_STRIPE_PUBLISHABLE_KEY=pk_live_...    # Stripe public key
@@ -276,6 +293,7 @@ REACT_APP_PAYPAL_CLIENT_ID=...                  # PayPal client ID
 ```
 
 ### Admin Panel (.env or Render)
+
 ```
 REACT_APP_API_URL=https://...        # Backend URL
 ```
@@ -287,11 +305,13 @@ REACT_APP_API_URL=https://...        # Backend URL
 Your app is configured for deployment! Choose:
 
 **🚀 Quick (Recommended):** Blueprint deployment
+
 - Automatic
 - Auto-deploy from GitHub
 - Less manual work
 
 **📋 Detailed:** Manual deployment
+
 - More control
 - Can debug easier
 - Slightly more steps
