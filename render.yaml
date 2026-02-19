@@ -12,9 +12,7 @@ services:
       - key: SECRET_KEY
         value: "your-secret-key-change-this-in-production"
       - key: DATABASE_URL
-        fromDatabase:
-          name: mysite-db
-          property: connectionString
+        value: ""
       - key: ALLOWED_HOSTS
         value: "mysite-backend.onrender.com,localhost"
       - key: CORS_ALLOWED_ORIGINS
