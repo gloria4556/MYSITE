@@ -1,0 +1,192 @@
+.admin-sidebar {
+  width: 220px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.98));
+  color: var(--ink, #1f1a15);
+  padding: 1rem 0.5rem;
+  z-index: 1000;
+  overflow-y: auto;
+  border-right: 1px solid rgba(31,26,21,0.04);
+}
+
+.admin-sidebar.collapsed {
+  width: 64px;
+}
+
+/* Scrollbar styling */
+.admin-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+.admin-sidebar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+.admin-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+.admin-sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Brand */
+.admin-sidebar .brand {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--accent-2, #2f4858);
+  padding-left: 0.5rem;
+}
+
+.admin-sidebar .brand-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+}
+
+/* Sidebar Top */
+.admin-sidebar .sidebar-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.5rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(31,26,21,0.04);
+  padding-bottom: 0.8rem;
+}
+
+.admin-sidebar .btn-collapse {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  font-size: 0.95rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+}
+
+/* Collapsed State */
+.admin-sidebar.collapsed .brand {
+  justify-content: center;
+  padding-left: 0.4rem;
+  font-size: 0.95rem;
+}
+
+.admin-sidebar.collapsed .btn-collapse {
+  padding: 0.25rem;
+}
+
+.admin-sidebar.collapsed .sidebar-nav span {
+  display: none;
+}
+
+.admin-sidebar.collapsed .sidebar-nav a {
+  justify-content: center;
+  padding: 0.5rem 0.35rem;
+}
+
+.admin-sidebar.collapsed .sidebar-section-title {
+  display: none;
+}
+
+/* Nav Sections */
+.admin-sidebar .sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.admin-sidebar .sidebar-section {
+  padding: 0;
+}
+
+.admin-sidebar .sidebar-section-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #9ca3af;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.5px;
+}
+
+.admin-sidebar .sidebar-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Links and Items */
+.admin-sidebar .sidebar-nav a,
+.admin-sidebar .sidebar-nav button {
+  color: inherit;
+  display: flex;
+  align-items: center;
+  padding: 0.6rem 0.75rem;
+  border-radius: 6px;
+  text-decoration: none;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+}
+
+.admin-sidebar .sidebar-nav a:hover {
+  background: rgba(208,124,85,0.06);
+  color: var(--accent);
+}
+
+.admin-sidebar .sidebar-nav li.active a {
+  background: rgba(208,124,85,0.12);
+  color: var(--accent-2);
+  font-weight: 600;
+}
+
+.admin-sidebar .sidebar-nav .icon {
+  min-width: 20px;
+  text-align: center;
+  margin-right: 0.45rem;
+}
+
+.admin-sidebar .sidebar-nav span {
+  flex: 1;
+}
+
+/* Social Links */
+.admin-sidebar .social-links a {
+  border-radius: 4px;
+}
+
+.admin-sidebar .social-links a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Bottom */
+.admin-sidebar .sidebar-bottom {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  right: 8px;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .admin-sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 1rem;
+  }
+  .admin-sidebar.collapsed {
+    width: 100%;
+  }
+  .admin-sidebar .sidebar-nav a {
+    padding: 0.5rem;
+  }
+}

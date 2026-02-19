@@ -1,0 +1,62 @@
+.admin-dashboard {
+  padding: 1rem 0;
+  color: var(--ink);
+}
+
+.admin-dashboard h2 {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* KPI widget */
+.kpi-widget {
+  background: linear-gradient(90deg, rgba(255,255,255,0.6), rgba(255,255,255,0.5));
+  border: var(--card-border);
+  color: var(--ink);
+}
+
+.kpi-widget small.text-muted { color: var(--muted); }
+.kpi-widget h4 { font-size: 1.25rem; }
+.kpi-widget .kpi-sparkline { color: rgba(31,26,21,0.35); }
+
+.card.h-100 {
+  height: 100%;
+  background: var(--card);
+  border: var(--card-border);
+  color: var(--ink);
+}
+
+.card { background: var(--card); border-radius: 10px; }
+
+/* Quick actions spacing */
+.card .d-grid .btn { width: 100%; }
+
+/* Recent orders */
+.recent-orders .list-group-item {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(31,26,21,0.03);
+  color: var(--ink);
+}
+
+/* Top Products */
+.list-group-item { background: transparent; color: var(--ink); }
+
+/* Table styles */
+table {
+  color: var(--ink);
+}
+table thead th { color: var(--muted); border-bottom: 1px solid rgba(31,26,21,0.04); }
+table tbody tr td { vertical-align: middle; border-top: 1px solid rgba(31,26,21,0.02); }
+
+/* Earnings small chart container */
+.card .mt-3 svg { overflow: visible; }
+
+/* New comments */
+.list-group-item small.text-muted { color: var(--muted); }
+
+/* Product overview padding */
+@media (max-width: 768px) {
+  .admin-dashboard .kpi-widget { margin-bottom: 0.75rem; }
+}
+
