@@ -4,7 +4,7 @@ services:
     env: python
     region: ohio
     plan: free
-    buildCommand: pip install -r backend/requirements.txt && cd backend && python manage.py migrate --noinput && python manage.py collectstatic --noinput
+    buildCommand: pip install -r backend/requirements.txt && cd backend && python manage.py migrate && python manage.py collectstatic --noinput
     startCommand: cd backend && gunicorn backend.wsgi:application --bind 0.0.0.0:$PORT
     envVars:
       - key: DEBUG
@@ -31,7 +31,7 @@ services:
     env: node
     region: ohio
     plan: free
-    buildCommand: cd frontend && npm install && npm run build
+    buildCommand: cd frontend && npm ci && npm run build
     startCommand: npm install -g serve && serve -s frontend/build -l 3000
     envVars:
       - key: REACT_APP_API_URL
@@ -44,7 +44,7 @@ services:
     env: node
     region: ohio
     plan: free
-    buildCommand: cd admin-panel && npm install && npm run build
+    buildCommand: cd admin-panel && npm ci && npm run build
     startCommand: npm install -g serve && serve -s admin-panel/build -l 3000
     envVars:
       - key: REACT_APP_API_URL
