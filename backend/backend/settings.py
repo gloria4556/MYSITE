@@ -30,6 +30,9 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from datetime import timedelta
 from pathlib import Path
+import os
+from decouple import config
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,12 +42,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-(s9)()*_-7ylv_0dh59n21=hfln+c%7hap7j&y4la1ksl2%8up'
+SECRET_KEY = config('SECRET_KEY', default='django-insecure-(s9)()*_-7ylv_0dh59n21=hfln+c%7hap7j&y4la1ksl2%8up')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default='True') == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1').split(',')
 
 # Development email settings: print emails to console for password reset testing
 if DEBUG:
@@ -69,6 +72,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -139,27 +143,28 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 
 # CORS Configuration
-# Allow local frontend and admin panel development origins
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',  # main frontend
-    'http://127.0.0.1:3000',
-    'http://localhost:3001',  # admin panel dev
-    'http://127.0.0.1:3001',
-]
-
-# For convenience during local development you can also enable all origins
-# WARNING: Do NOT enable this in production
-# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = config(
+    'CORS_ALLOWED_ORIGINS',
+    default='http://localhost:3000,http://127.0.0.1:3000,http://localhost:3001,http://127.0.0.1:3001'
+).split(',')
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if config('DATABASE_URL', default=None):
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=config('DATABASE_URL'),
+            conn_max_age=600
+        )
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation
@@ -196,22 +201,25 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
 
-STATICFILES_DIRS = [BASE_DIR / 'static',]
-
-MEDIA_ROOT ='static/media'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 # ===== PAYMENT GATEWAY CONFIGURATION =====
 # Stripe Payment Processing
-STRIPE_PUBLIC_KEY = 'pk_test_default'  # Replace with environment variable
-STRIPE_SECRET_KEY = 'sk_test_default'   # Replace with environment variable
+STRIPE_PUBLIC_KEY = config('STRIPE_PUBLIC_KEY', default='pk_test_default')
+STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='sk_test_default')
 
 # PayPal Configuration
-PAYPAL_CLIENT_ID = ''  # Configure from environment variables
-PAYPAL_SECRET = ''     # Configure from environment variables
+PAYPAL_CLIENT_ID = config('PAYPAL_CLIENT_ID', default='')
+PAYPAL_SECRET = config('PAYPAL_SECRET', default='')
 
 # Supported Payment Methods in the application
 PAYMENT_METHODS = [
