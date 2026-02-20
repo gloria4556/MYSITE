@@ -127,7 +127,11 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            # React build outputs (when you run `npm run build` in frontend/admin-panel)
+            os.path.join(BASE_DIR, '..', 'frontend', 'build'),
+            os.path.join(BASE_DIR, '..', 'admin-panel', 'build'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -210,6 +214,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
+    # Serve React static assets from the build folders when present
+    os.path.join(BASE_DIR, '..', 'frontend', 'build', 'static'),
+    os.path.join(BASE_DIR, '..', 'admin-panel', 'build', 'static'),
 ]
 
 # ===== PAYMENT GATEWAY CONFIGURATION =====

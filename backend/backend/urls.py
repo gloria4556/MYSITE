@@ -20,6 +20,8 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from django.conf import settings
 from django.conf.urls.static import static
+from django.urls import re_path
+from base.views import serve_frontend, serve_admin_panel
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,3 +31,10 @@ urlpatterns = [
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# Catch-all route to serve the frontend (exclude admin, api, static and media)
+urlpatterns += [
+    re_path(r'^(?!api/|admin/|static/|media/).*$', serve_frontend),
+    # admin-panel can be mounted at /admin-panel/ if you prefer
+    re_path(r'^admin-panel(?:/.*)?$', serve_admin_panel),
+]

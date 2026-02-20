@@ -27,6 +27,30 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.core.mail import send_mail
 from django.conf import settings
+from django.views.generic import View
+
+
+def serve_frontend(request):
+    """Serve the frontend React app index.html.
+
+    Expects `frontend/build/index.html` to exist (run `npm run build` in `frontend`).
+    """
+    try:
+        return render(request, 'index.html')
+    except Exception:
+        # If template not found, return a minimal response indicating build is missing
+        return JsonResponse({'detail': 'Frontend build not found. Run `npm run build` in frontend.'}, status=404)
+
+
+def serve_admin_panel(request):
+    """Serve the admin-panel React app index.html.
+
+    Expects `admin-panel/build/index.html` to exist (run `npm run build` in `admin-panel`).
+    """
+    try:
+        return render(request, 'index.html')
+    except Exception:
+        return JsonResponse({'detail': 'Admin build not found. Run `npm run build` in admin-panel.'}, status=404)
 
  
 
